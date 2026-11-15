@@ -1,0 +1,102 @@
+---
+// 計時器本體（首頁＝自由課表；課表頁傳 routine＝固定這份課表）
+interface Props { routine?: Record<string, unknown> }
+const { routine } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<div class="topbar" aria-hidden="true"><i id="bar"></i></div>
+<div class="glow" aria-hidden="true"></div>
+
+<div class="app">
+  <header class="top">
+    <a class="brand" href={base}><img src={base + 'img/icon.svg'} alt=""><span>RoundBell</span></a>
+    <nav class="nav">
+      <a href={base + 'routines'}>課表</a>
+      <a href={base + 'builder'}>編輯器</a>
+    </nav>
+    <span class="sp"></span>
+    <button class="ibtn" id="btnLog" aria-label="訓練紀錄"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></button>
+    <button class="ibtn" id="btnSet" aria-label="設定"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></button>
+  </header>
+
+  <main class="stage" id="stage">
+    <div class="label" id="label">&nbsp;</div>
+    <div class="combo" id="combo" aria-live="polite"></div>
+    <div class="clock" id="clock">3:00</div>
+    <div class="round" id="round">&nbsp;</div>
+    <div class="sub" id="sub"></div>
+    <div class="hint" id="hint"></div>
+  </main>
+
+  <footer class="bottom">
+    <button class="go" id="go">開始</button>
+    {!routine && <div class="chips" id="chips"></div>}
+  </footer>
+</div>
+
+{routine && <script type="application/json" id="routineData" set:html={JSON.stringify(routine)} />}
+
+<div class="pause" id="pause">
+  <div class="t">已暫停</div>
+  <div class="prow"><button class="pbtn main" id="pResume">▶ 繼續</button><button class="pbtn" id="pSkip">下一段 ⏭</button></div>
+  <div class="prow"><button class="pbtn end" id="pEnd">結束訓練</button></div>
+</div>
+
+<div class="hold" id="hold"><svg viewBox="0 0 140 140"><circle class="bg" cx="70" cy="70" r="60"/><circle class="fg" id="holdFg" cx="70" cy="70" r="60"/></svg><span>放開取消</span></div>
+<div class="toast" id="toast"></div>
+
+<dialog id="dSet"><form class="dlg" method="dialog" onsubmit="return false">
+  <div class="dh"><h2>課表設定</h2><button type="button" class="btn ghost" data-close>關閉</button></div>
+  <div class="db">
+    <div class="field"><label for="fName">課表名稱</label><input type="text" id="fName" maxlength="30"></div>
+    <div id="fNums"></div>
+    <div id="fSegNote" class="note" hidden>這份課表有多個段落，段落時間請到編輯器改。<br><a class="link" id="btnEditSeg" href={base + 'builder'}>到編輯器修改 →</a></div>
+    <div id="fWarn"></div>
+    <div class="tog"><div>半回合提示<small>回合過一半「嗶嗶」一聲（回合 1 分鐘以上才響）</small></div><input type="checkbox" id="fHalf"></div>
+
+    <div class="field">
+      <div class="fl">音效主題</div>
+      <div class="seg" id="fTheme"><button type="button" data-v="bell">傳統銅鐘</button><button type="button" data-v="beep">電子蜂鳴</button><button type="button" data-v="voice">語音報時</button></div>
+      <div class="listen"><button type="button" data-try="start">🔔 回合開始</button><button type="button" data-try="warn">🪵 最後警告</button><button type="button" data-try="end">🔔 回合結束</button><button type="button" data-try="finish">🏁 完成</button></div>
+    </div>
+
+    <div class="group">
+      <div class="tog"><div>🥊 教練喊拳<small>回合中語音念出組合拳＋畫面字幕；最後警告時自動停</small></div><input type="checkbox" id="fCombo"></div>
+      <div id="comboOpts">
+        <div class="field"><div class="fl">難度</div>
+          <div class="seg" id="fLevel"><button type="button" data-v="basic">基礎（1～6 數字拳）</button><button type="button" data-v="adv">進階（加閃躲、潛避、格擋、步伐）</button></div>
+        </div>
+        <div class="field"><div class="fl">節奏</div>
+          <div class="seg" id="fPace"><button type="button" data-v="slow">慢</button><button type="button" data-v="mid">中</button><button type="button" data-v="fast">快</button></div>
+          <div class="listen"><button type="button" id="tryCombo">🗣 試聽喊拳</button></div>
+        </div>
+        <p class="note">數字拳：1 刺拳・2 直拳・3 左勾・4 右勾・5 左上勾・6 右上勾（右撇子正架）</p>
+      </div>
+    </div>
+
+    <div class="tog"><div>休息時顯示技術提醒<small>休息倒數時輪播小技巧</small></div><input type="checkbox" id="fTips"></div>
+    <div class="field">
+      <div class="fl">音量 <output id="oVol"></output></div>
+      <div class="step"><input type="range" id="fVol" min="10" max="100" step="5"></div>
+    </div>
+    <div class="tog"><div>震動<small>Android 手機才有；iPhone 網頁不支援震動（用邊框光暈代替）</small></div><input type="checkbox" id="fVib"></div>
+
+    <button type="button" class="btn wide" id="btnShare">🔗 複製分享連結</button>
+    <p class="note">• 點畫面任意處＝暫停／繼續；長按 0.8 秒＝結束（戴拳套也好按）。<br>• 訓練中螢幕不會自動關。可以邊放音樂，鐘聲會蓋過去。<br>• 加入主畫面後沒網路也能用：iPhone 用 Safari「分享 → 加入主畫面」。</p>
+    <button type="button" class="link" id="btnReset">恢復預設課表</button>
+  </div>
+  <div class="df"><button type="button" class="btn" id="btnDel">刪除</button><button type="button" class="btn" id="btnCopy">另存新課表</button><button type="button" class="btn pri" id="btnSave">儲存</button></div>
+</form></dialog>
+
+<dialog id="dIn"><div class="dlg">
+  <div class="dh"><h2>收到一份課表</h2><button type="button" class="btn ghost" data-close>取消</button></div>
+  <div class="db" id="inBody"></div>
+  <div class="df"><button type="button" class="btn" id="inOnce">單次使用</button><button type="button" class="btn pri" id="inSave">儲存並套用</button></div>
+</div></dialog>
+
+<dialog id="dLog"><div class="dlg">
+  <div class="dh"><h2>訓練紀錄</h2><button type="button" class="btn ghost" data-close>關閉</button></div>
+  <div class="db"><div class="stats" id="stats"></div><ul class="log" id="logList"></ul><p class="note">紀錄只存在這支手機，不會上傳。</p><button type="button" class="link" id="btnClearLog">清除紀錄</button></div>
+</div></dialog>
+
+<script src="../scripts/timer.js"></script>
