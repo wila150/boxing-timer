@@ -8,5 +8,5 @@
 - Engine＝時間戳記狀態機，開始/繼續時 Web Audio 一次預排整段鐘聲（音效全合成沒有音檔）；資料存 localStorage `roundbell_v1`
 - 本機：`npm run dev`；`npm run build && npx astro preview` 看正式版（SW 只在正式版註冊）
 - 圖示 `public/img/icon.svg` → png 用 headless Chromium 轉
-- 舊 Firebase 專案 `boxing-timer-d0896`（使用者建）、`roundbell-timer`（我建）都已不用；`firebase.json`/`.firebaserc` 已刪
+- 舊 Firebase 專案 `boxing-timer-d0896`、`roundbell-timer` 已在 2026-11-16 刪除（30 天內可在 GCP 救回）；不再用 Firebase
 - 來源：從 `../Boxing Coach/public/timer.html`（突破重圍 /timer）複製出來，兩邊各自改
