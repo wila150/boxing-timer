@@ -1,7 +1,18 @@
 ---
 import Base from '../layouts/Base.astro';
 import Timer from '../components/Timer.astro';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'RoundBell 拳擊計時器',
+  url: new URL(import.meta.env.BASE_URL.replace(/\/?$/, '/'), Astro.site).href,
+  applicationCategory: 'HealthApplication',
+  operatingSystem: 'Any（瀏覽器）',
+  inLanguage: 'zh-Hant',
+  description: '免費線上拳擊回合計時器：鐘聲、最後 10 秒警告、教練語音喊組合拳、自訂與分享課表，可離線使用。',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'TWD' },
+};
 ---
-<Base title="RoundBell 拳擊計時器｜線上拳擊回合計時、教練喊拳、免下載" description="免費線上拳擊計時器：預設 3 分鐘回合、1 分鐘休息，最後 10 秒木魚警告、教練語音喊組合拳，可自訂與分享課表，加入主畫面沒網路也能用。">
+<Base title="RoundBell 拳擊計時器｜線上拳擊回合計時、教練喊拳、免下載" description="免費線上拳擊計時器：預設 3 分鐘回合、1 分鐘休息，最後 10 秒木魚警告、教練語音喊組合拳，可自訂與分享課表，加入主畫面沒網路也能用。" jsonLd={jsonLd}>
   <Timer />
 </Base>

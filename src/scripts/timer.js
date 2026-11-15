@@ -644,6 +644,33 @@ function openLog() {
 $('btnLog').addEventListener('click', openLog);
 $('btnClearLog').addEventListener('click', () => { if (!confirm('清除全部訓練紀錄？')) return; Store.data.log = []; Store.save(); openLog(); });
 
+/* ---------- 安裝引導：Android 用安裝按鈕、iPhone 教「加入主畫面」 ---------- */
+(() => {
+  const OFF = 'roundbell_install_off';
+  const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  let off = false; try { off = !!localStorage.getItem(OFF); } catch {}
+  if (standalone || off) return;
+  const box = $('install'); let deferred = null;
+  $('installX').addEventListener('click', () => { box.hidden = true; try { localStorage.setItem(OFF, '1'); } catch {} });
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault(); deferred = e;
+    $('installText').textContent = '安裝成 App，沒網路也能用';
+    $('installBtn').hidden = false; box.hidden = false;
+  });
+  $('installBtn').addEventListener('click', async () => {
+    if (!deferred) return;
+    deferred.prompt();
+    const r = await deferred.userChoice.catch(() => null);
+    deferred = null; box.hidden = true;
+    if (r && r.outcome === 'accepted') toast('已安裝，主畫面找 RoundBell');
+  });
+  window.addEventListener('appinstalled', () => { box.hidden = true; });
+  if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+    $('installText').innerHTML = '加到主畫面：點 <b>分享</b> <span aria-hidden="true">⎋</span> →「加入主畫面」';
+    $('installBtn').hidden = true; box.hidden = false;
+  }
+})();
+
 /* ---------- 啟動 ---------- */
 Store.load();
 const routeData = $('routineData');

@@ -29,6 +29,7 @@ const canonical = new URL(Astro.url.pathname.replace(/\/?$/, '/'), Astro.site);
 <link rel="manifest" href={base + 'manifest.webmanifest'}>
 <link rel="icon" href={base + 'img/icon.svg'} type="image/svg+xml">
 <link rel="apple-touch-icon" href={base + 'img/apple-touch-icon.png'}>
+<link rel="sitemap" href={base + 'sitemap.xml'}>
 {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 </head>
 <body class={bodyClass}>

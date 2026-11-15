@@ -29,6 +29,11 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
   </main>
 
   <footer class="bottom">
+    <div class="install" id="install" hidden>
+      <span id="installText">安裝成 App，沒網路也能用</span>
+      <button type="button" id="installBtn">安裝</button>
+      <button type="button" id="installX" aria-label="不再顯示">✕</button>
+    </div>
     <button class="go" id="go">開始</button>
     {!routine && <div class="chips" id="chips"></div>}
   </footer>
