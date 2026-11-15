@@ -11,8 +11,8 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
   <header class="top">
     <a class="brand" href={base}><img src={base + 'img/icon.svg'} alt=""><span>RoundBell</span></a>
     <nav class="nav">
-      <a href={base + 'routines'}>課表</a>
-      <a href={base + 'builder'}>編輯器</a>
+      <a href={base + 'routines/'}>課表</a>
+      <a href={base + 'builder/'}>編輯器</a>
     </nav>
     <span class="sp"></span>
     <button class="ibtn" id="btnLog" aria-label="訓練紀錄"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></button>
@@ -50,7 +50,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
   <div class="db">
     <div class="field"><label for="fName">課表名稱</label><input type="text" id="fName" maxlength="30"></div>
     <div id="fNums"></div>
-    <div id="fSegNote" class="note" hidden>這份課表有多個段落，段落時間請到編輯器改。<br><a class="link" id="btnEditSeg" href={base + 'builder'}>到編輯器修改 →</a></div>
+    <div id="fSegNote" class="note" hidden>這份課表有多個段落，段落時間請到編輯器改。<br><a class="link" id="btnEditSeg" href={base + 'builder/'}>到編輯器修改 →</a></div>
     <div id="fWarn"></div>
     <div class="tog"><div>半回合提示<small>回合過一半「嗶嗶」一聲（回合 1 分鐘以上才響）</small></div><input type="checkbox" id="fHalf"></div>
 

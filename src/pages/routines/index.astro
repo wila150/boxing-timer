@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import data from '../../data/routines.json';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const min = (s: number) => Math.round(s / 60);
+const works = (r: any) => r.segments.filter((s: any) => s.type === 'work').length;
+---
+<Base title="拳擊訓練課表｜熱身、空擊、沙袋、HIIT、伸展｜RoundBell" description="免費拳擊訓練課表：手腕熱身、跳繩、空擊步法、重沙袋 3 回合、拳擊 HIIT、Tabata、訓練後伸展，每份都有語音計時器，打開就能跟著練。" bodyClass="page">
+  <SiteHeader />
+  <main class="wrap">
+    <h1 class="page-h1">拳擊訓練課表</h1>
+    <p class="lead">挑一份課表，點進去按「開始」就有鐘聲、語音和教練喊拳帶你練。全部免費、免註冊，加入主畫面後沒網路也能用。</p>
+    {data.categories.map((c) => (
+      <section class="cat" id={c.id}>
+        <h2>{c.name}</h2>
+        <p class="muted">{c.desc}</p>
+        <div class="cards">
+          {data.routines.filter((r) => r.cat === c.id).map((r) => (
+            <a class="card" href={base + 'routines/' + r.slug + '/'}>
+              <h3>{r.name}</h3>
+              <p>{r.summary}</p>
+              <div class="meta"><span>⏱ {min(r.total)} 分鐘</span><span>{works(r)} 個訓練段</span><span>{r.level}</span><span>{r.equip}</span>{r.combo.on && <span>🥊 教練喊拳</span>}</div>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+    <section class="cta">
+      <h2>想自己排？</h2>
+      <p class="muted">用編輯器從動作庫挑動作、設秒數，產生分享連結傳給拳友。</p>
+      <a class="btn-red" href={base + 'builder/'}>打開課表編輯器 →</a>
+    </section>
+  </main>
+</Base>

@@ -1,0 +1,14 @@
+---
+// 一般內容頁（課表總覽、編輯器）的頂部
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const path = Astro.url.pathname;
+const on = (p: string) => (path.startsWith(base + p) ? 'on' : '');
+---
+<header class="site-top">
+  <a class="brand" href={base}><img src={base + 'img/icon.svg'} alt=""><span>RoundBell</span></a>
+  <nav class="site-nav">
+    <a href={base}>計時器</a>
+    <a href={base + 'routines/'} class={on('routines')}>課表</a>
+    <a href={base + 'builder/'} class={on('builder')}>編輯器</a>
+  </nav>
+</header>

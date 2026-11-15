@@ -1,0 +1,1101 @@
+{
+ "categories": [
+  {
+   "id": "warmup",
+   "name": "熱身與手腕保護",
+   "desc": "上拳套前先把手腕、肩膀、心肺叫醒，減少扭傷。"
+  },
+  {
+   "id": "shadow",
+   "name": "空擊步法節奏",
+   "desc": "不用器材，對著鏡子練步法、組合拳與節奏感。"
+  },
+  {
+   "id": "bag",
+   "name": "重沙袋爆發力",
+   "desc": "打沙袋練出拳力量、連打速度與回合耐力。"
+  },
+  {
+   "id": "hiit",
+   "name": "拳擊核心 HIIT",
+   "desc": "結合出拳與核心動作的高強度間歇，燃脂又練體能。"
+  },
+  {
+   "id": "stretch",
+   "name": "訓練後肩頸伸展",
+   "desc": "練完放鬆肩頸、前臂與髖部，隔天比較不痠。"
+  }
+ ],
+ "routines": [
+  {
+   "slug": "warmup-wrist-shoulder-5min",
+   "cat": "warmup",
+   "name": "5 分鐘手腕肩膀熱身",
+   "level": "入門",
+   "equip": "不用器材",
+   "summary": "上拳套前的 5 分鐘熱身：手腕、肩膀繞環，加上小跳步與慢速空擊，把關節和心跳暖起來。",
+   "theme": "voice",
+   "warn": 3,
+   "combo": {
+    "on": false,
+    "level": "basic",
+    "pace": "mid"
+   },
+   "segments": [
+    {
+     "type": "prepare",
+     "dur": 10,
+     "name": "準備",
+     "how": "戴好拳套或護具，站到訓練位置"
+    },
+    {
+     "type": "work",
+     "dur": 30,
+     "name": "手腕繞環",
+     "how": "雙手十指交扣，手腕順時針、逆時針各繞 15 圈"
+    },
+    {
+     "type": "work",
+     "dur": 30,
+     "name": "肩膀繞環",
+     "how": "手臂伸直大繞圈，前 15 秒往前、後 15 秒往後"
+    },
+    {
+     "type": "work",
+     "dur": 45,
+     "name": "開合跳",
+     "how": "保持輕盈落地，手臂舉過頭"
+    },
+    {
+     "type": "rest",
+     "dur": 10,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 45,
+     "name": "原地小跳步",
+     "how": "腳跟離地，用前腳掌輕跳，像跳繩一樣"
+    },
+    {
+     "type": "work",
+     "dur": 45,
+     "name": "慢速刺拳",
+     "how": "站好拳架，慢慢出刺拳，注意收回護臉"
+    },
+    {
+     "type": "rest",
+     "dur": 10,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 30,
+     "name": "轉體擺手",
+     "how": "雙腳不動，上半身左右轉，手臂放鬆甩"
+    },
+    {
+     "type": "work",
+     "dur": 30,
+     "name": "握拳張開",
+     "how": "雙手快速握拳、張開，活動前臂和手指"
+    }
+   ],
+   "tips": [
+    "手腕是拳擊最常受傷的地方，熱身一定要做到",
+    "熱身強度約 5 成就好，微微出汗即可",
+    "有纏手帶的話，熱身後再纏"
+   ],
+   "total": 285
+  },
+  {
+   "slug": "jump-rope-warmup-3-rounds",
+   "cat": "warmup",
+   "name": "跳繩熱身 3 回合",
+   "level": "入門",
+   "equip": "跳繩",
+   "summary": "拳擊手經典熱身：3 回合跳繩，每回合 2 分鐘換不同跳法，練節奏與小腿彈性。",
+   "theme": "bell",
+   "warn": 10,
+   "combo": {
+    "on": false,
+    "level": "basic",
+    "pace": "mid"
+   },
+   "segments": [
+    {
+     "type": "prepare",
+     "dur": 10,
+     "name": "準備",
+     "how": "戴好拳套或護具，站到訓練位置"
+    },
+    {
+     "type": "work",
+     "dur": 120,
+     "name": "基本雙腳跳",
+     "how": "手腕轉繩、手肘貼身，跳離地面 2～3 公分就好"
+    },
+    {
+     "type": "rest",
+     "dur": 30,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 120,
+     "name": "拳擊步左右換腳",
+     "how": "像慢跑一樣左右腳輪流，重心放前腳掌"
+    },
+    {
+     "type": "rest",
+     "dur": 30,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 120,
+     "name": "加速＋雙迴旋",
+     "how": "前 90 秒穩定加速，最後 30 秒挑戰雙迴旋或高抬腿"
+    }
+   ],
+   "tips": [
+    "繩子長度：踩住中間，把手到腋下",
+    "跳不好時先空手模擬節奏",
+    "跳繩鞋底要有緩衝，避免小腿受傷"
+   ],
+   "total": 430
+  },
+  {
+   "slug": "shadow-boxing-footwork-3-rounds",
+   "cat": "shadow",
+   "name": "空擊步法 3 回合",
+   "level": "入門",
+   "equip": "不用器材",
+   "summary": "3 回合空擊，每回合一個步法主題：前後移動、左右側移、步法搭配組合拳，教練會在回合中喊拳。",
+   "theme": "bell",
+   "warn": 10,
+   "combo": {
+    "on": true,
+    "level": "basic",
+    "pace": "slow"
+   },
+   "segments": [
+    {
+     "type": "prepare",
+     "dur": 10,
+     "name": "準備",
+     "how": "戴好拳套或護具，站到訓練位置"
+    },
+    {
+     "type": "work",
+     "dur": 180,
+     "name": "前後步法",
+     "how": "前腳先動、後腳跟上，兩腳距離保持不變；聽到喊拳就出拳"
+    },
+    {
+     "type": "rest",
+     "dur": 60,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 180,
+     "name": "左右側移",
+     "how": "往左移左腳先動、往右移右腳先動，不要交叉腳"
+    },
+    {
+     "type": "rest",
+     "dur": 60,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 180,
+     "name": "步法＋組合",
+     "how": "移動中出組合，打完馬上換位置，不要站著不動"
+    }
+   ],
+   "tips": [
+    "對著鏡子練，看拳架有沒有掉",
+    "每次出拳後手都要回到臉旁",
+    "呼吸跟出拳一起：出拳吐氣"
+   ],
+   "total": 670
+  },
+  {
+   "slug": "shadow-boxing-combos-6-rounds",
+   "cat": "shadow",
+   "name": "進階空擊組合 6 回合",
+   "level": "中階",
+   "equip": "不用器材",
+   "summary": "6 回合 × 2 分鐘的空擊組合訓練，教練喊進階組合（含閃躲、潛避、格擋、步伐），練反應與攻防轉換。",
+   "theme": "bell",
+   "warn": 10,
+   "combo": {
+    "on": true,
+    "level": "adv",
+    "pace": "mid"
+   },
+   "segments": [
+    {
+     "type": "prepare",
+     "dur": 10,
+     "name": "準備",
+     "how": "戴好拳套或護具，站到訓練位置"
+    },
+    {
+     "type": "work",
+     "dur": 120,
+     "name": "第 1 回合：攻防組合",
+     "how": "聽喊拳出組合，防守動作要做完整再回拳架"
+    },
+    {
+     "type": "rest",
+     "dur": 45,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 120,
+     "name": "第 2 回合：攻防組合",
+     "how": "聽喊拳出組合，防守動作要做完整再回拳架"
+    },
+    {
+     "type": "rest",
+     "dur": 45,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 120,
+     "name": "第 3 回合：攻防組合",
+     "how": "聽喊拳出組合，防守動作要做完整再回拳架"
+    },
+    {
+     "type": "rest",
+     "dur": 45,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 120,
+     "name": "第 4 回合：攻防組合",
+     "how": "聽喊拳出組合，防守動作要做完整再回拳架"
+    },
+    {
+     "type": "rest",
+     "dur": 45,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 120,
+     "name": "第 5 回合：攻防組合",
+     "how": "聽喊拳出組合，防守動作要做完整再回拳架"
+    },
+    {
+     "type": "rest",
+     "dur": 45,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 120,
+     "name": "第 6 回合：攻防組合",
+     "how": "聽喊拳出組合，防守動作要做完整再回拳架"
+    }
+   ],
+   "tips": [
+    "閃躲用膝蓋往下、往側邊，不要只彎腰",
+    "潛避是畫一個 U 字，從拳下穿過去",
+    "格擋後馬上反擊，不要只擋"
+   ],
+   "total": 955
+  },
+  {
+   "slug": "heavy-bag-3-rounds",
+   "cat": "bag",
+   "name": "重沙袋 3 回合",
+   "level": "入門",
+   "equip": "重沙袋、拳套",
+   "summary": "最經典的沙袋訓練：3 回合 × 3 分鐘、休息 1 分鐘，教練用基礎數字拳快節奏喊組合，練出拳力量與耐力。",
+   "theme": "bell",
+   "warn": 10,
+   "combo": {
+    "on": true,
+    "level": "basic",
+    "pace": "fast"
+   },
+   "segments": [
+    {
+     "type": "prepare",
+     "dur": 15,
+     "name": "準備",
+     "how": "戴好拳套或護具，站到訓練位置"
+    },
+    {
+     "type": "work",
+     "dur": 180,
+     "name": "第 1 回合：找距離",
+     "how": "站在伸手剛好碰到沙袋的距離，先打直拳找節奏"
+    },
+    {
+     "type": "rest",
+     "dur": 60,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 180,
+     "name": "第 2 回合：組合拳",
+     "how": "照喊拳打組合，每組打完要移動位置"
+    },
+    {
+     "type": "rest",
+     "dur": 60,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 180,
+     "name": "第 3 回合：全力輸出",
+     "how": "最後一回合把剩下的力氣打完，最後 10 秒連打"
+    }
+   ],
+   "tips": [
+    "打的是沙袋表面後面 5 公分，不是推沙袋",
+    "沙袋盪過來要閃或移動，不要硬擋",
+    "拳套裡一定要纏手帶"
+   ],
+   "total": 675
+  },
+  {
+   "slug": "heavy-bag-power-intervals",
+   "cat": "bag",
+   "name": "重沙袋爆發間歇 10 組",
+   "level": "中階",
+   "equip": "重沙袋、拳套",
+   "summary": "20 秒全力連打、40 秒輕打換氣，重複 10 組，練爆發力與快速恢復能力。",
+   "theme": "beep",
+   "warn": 3,
+   "combo": {
+    "on": false,
+    "level": "basic",
+    "pace": "fast"
+   },
+   "segments": [
+    {
+     "type": "prepare",
+     "dur": 15,
+     "name": "準備",
+     "how": "戴好拳套或護具，站到訓練位置"
+    },
+    {
+     "type": "work",
+     "dur": 20,
+     "name": "全力連打 1/10",
+     "how": "左右直拳最快速度連打，手不要停"
+    },
+    {
+     "type": "rest",
+     "dur": 40,
+     "name": "輕打換氣",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 20,
+     "name": "全力連打 2/10",
+     "how": "左右直拳最快速度連打，手不要停"
+    },
+    {
+     "type": "rest",
+     "dur": 40,
+     "name": "輕打換氣",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 20,
+     "name": "全力連打 3/10",
+     "how": "左右直拳最快速度連打，手不要停"
+    },
+    {
+     "type": "rest",
+     "dur": 40,
+     "name": "輕打換氣",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 20,
+     "name": "全力連打 4/10",
+     "how": "左右直拳最快速度連打，手不要停"
+    },
+    {
+     "type": "rest",
+     "dur": 40,
+     "name": "輕打換氣",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 20,
+     "name": "全力連打 5/10",
+     "how": "左右直拳最快速度連打，手不要停"
+    },
+    {
+     "type": "rest",
+     "dur": 40,
+     "name": "輕打換氣",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 20,
+     "name": "全力連打 6/10",
+     "how": "左右直拳最快速度連打，手不要停"
+    },
+    {
+     "type": "rest",
+     "dur": 40,
+     "name": "輕打換氣",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 20,
+     "name": "全力連打 7/10",
+     "how": "左右直拳最快速度連打，手不要停"
+    },
+    {
+     "type": "rest",
+     "dur": 40,
+     "name": "輕打換氣",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 20,
+     "name": "全力連打 8/10",
+     "how": "左右直拳最快速度連打，手不要停"
+    },
+    {
+     "type": "rest",
+     "dur": 40,
+     "name": "輕打換氣",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 20,
+     "name": "全力連打 9/10",
+     "how": "左右直拳最快速度連打，手不要停"
+    },
+    {
+     "type": "rest",
+     "dur": 40,
+     "name": "輕打換氣",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 20,
+     "name": "全力連打 10/10",
+     "how": "左右直拳最快速度連打，手不要停"
+    }
+   ],
+   "tips": [
+    "全力段真的要全力，輕打段才是休息",
+    "連打時腰要跟著轉，不只是手",
+    "喘不過來就把輕打段改成站著走動"
+   ],
+   "total": 575
+  },
+  {
+   "slug": "boxing-core-hiit-12-minutes",
+   "cat": "hiit",
+   "name": "拳擊核心 HIIT 12 分鐘",
+   "level": "中階",
+   "equip": "不用器材（可加墊子）",
+   "summary": "6 個拳擊＋核心動作，每個 40 秒、休息 20 秒，做 2 輪共 12 分鐘，燃脂又強化出拳需要的核心力量。",
+   "theme": "voice",
+   "warn": 5,
+   "combo": {
+    "on": false,
+    "level": "basic",
+    "pace": "mid"
+   },
+   "segments": [
+    {
+     "type": "prepare",
+     "dur": 10,
+     "name": "準備",
+     "how": "戴好拳套或護具，站到訓練位置"
+    },
+    {
+     "type": "work",
+     "dur": 40,
+     "name": "深蹲直拳",
+     "how": "蹲下站起來時左右各出一記直拳"
+    },
+    {
+     "type": "rest",
+     "dur": 20,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 40,
+     "name": "登山者",
+     "how": "手撐地快速交替提膝，背保持平"
+    },
+    {
+     "type": "rest",
+     "dur": 20,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 40,
+     "name": "俄羅斯轉體出拳",
+     "how": "坐姿雙腳離地，轉體時往側邊出拳"
+    },
+    {
+     "type": "rest",
+     "dur": 20,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 40,
+     "name": "棒式拍肩",
+     "how": "高棒式，左右手輪流拍對側肩膀，屁股不要晃"
+    },
+    {
+     "type": "rest",
+     "dur": 20,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 40,
+     "name": "波比跳",
+     "how": "下蹲、後跳成棒式、收回、跳起；累了可以不跳"
+    },
+    {
+     "type": "rest",
+     "dur": 20,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 40,
+     "name": "仰臥起坐直拳",
+     "how": "坐起來時出左右直拳，慢慢躺下"
+    },
+    {
+     "type": "rest",
+     "dur": 20,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 40,
+     "name": "深蹲直拳",
+     "how": "蹲下站起來時左右各出一記直拳"
+    },
+    {
+     "type": "rest",
+     "dur": 20,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 40,
+     "name": "登山者",
+     "how": "手撐地快速交替提膝，背保持平"
+    },
+    {
+     "type": "rest",
+     "dur": 20,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 40,
+     "name": "俄羅斯轉體出拳",
+     "how": "坐姿雙腳離地，轉體時往側邊出拳"
+    },
+    {
+     "type": "rest",
+     "dur": 20,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 40,
+     "name": "棒式拍肩",
+     "how": "高棒式，左右手輪流拍對側肩膀，屁股不要晃"
+    },
+    {
+     "type": "rest",
+     "dur": 20,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 40,
+     "name": "波比跳",
+     "how": "下蹲、後跳成棒式、收回、跳起；累了可以不跳"
+    },
+    {
+     "type": "rest",
+     "dur": 20,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 40,
+     "name": "仰臥起坐直拳",
+     "how": "坐起來時出左右直拳，慢慢躺下"
+    }
+   ],
+   "tips": [
+    "動作品質比次數重要",
+    "核心收緊：肚臍往脊椎方向收",
+    "有腰傷的話把俄羅斯轉體換成棒式"
+   ],
+   "total": 710
+  },
+  {
+   "slug": "boxing-tabata-4-minutes",
+   "cat": "hiit",
+   "name": "拳擊 Tabata 4 分鐘",
+   "level": "中階",
+   "equip": "不用器材",
+   "summary": "20 秒全力、10 秒休息 × 8 組的 Tabata，快速直拳與深蹲交替，4 分鐘把心跳拉到最高。",
+   "theme": "beep",
+   "warn": 3,
+   "combo": {
+    "on": false,
+    "level": "basic",
+    "pace": "fast"
+   },
+   "segments": [
+    {
+     "type": "prepare",
+     "dur": 10,
+     "name": "準備",
+     "how": "戴好拳套或護具，站到訓練位置"
+    },
+    {
+     "type": "work",
+     "dur": 20,
+     "name": "快速直拳",
+     "how": "左右直拳最快速度，手肘不要鎖死"
+    },
+    {
+     "type": "rest",
+     "dur": 10,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 20,
+     "name": "深蹲跳",
+     "how": "蹲到大腿平行地面再跳起"
+    },
+    {
+     "type": "rest",
+     "dur": 10,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 20,
+     "name": "快速直拳",
+     "how": "左右直拳最快速度，手肘不要鎖死"
+    },
+    {
+     "type": "rest",
+     "dur": 10,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 20,
+     "name": "深蹲跳",
+     "how": "蹲到大腿平行地面再跳起"
+    },
+    {
+     "type": "rest",
+     "dur": 10,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 20,
+     "name": "快速直拳",
+     "how": "左右直拳最快速度，手肘不要鎖死"
+    },
+    {
+     "type": "rest",
+     "dur": 10,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 20,
+     "name": "深蹲跳",
+     "how": "蹲到大腿平行地面再跳起"
+    },
+    {
+     "type": "rest",
+     "dur": 10,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 20,
+     "name": "快速直拳",
+     "how": "左右直拳最快速度，手肘不要鎖死"
+    },
+    {
+     "type": "rest",
+     "dur": 10,
+     "name": "休息",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 20,
+     "name": "深蹲跳",
+     "how": "蹲到大腿平行地面再跳起"
+    }
+   ],
+   "tips": [
+    "Tabata 要全力才有效果，4 分鐘很短",
+    "做完走動 1 分鐘再坐下",
+    "一週 2～3 次就夠"
+   ],
+   "total": 240
+  },
+  {
+   "slug": "post-workout-neck-shoulder-stretch",
+   "cat": "stretch",
+   "name": "訓練後肩頸伸展 6 分鐘",
+   "level": "入門",
+   "equip": "不用器材",
+   "summary": "打完拳肩頸和前臂最緊，跟著語音做 6 分鐘伸展：頸部、肩膀、三頭肌、胸口與手腕。",
+   "theme": "voice",
+   "warn": 0,
+   "combo": {
+    "on": false,
+    "level": "basic",
+    "pace": "mid"
+   },
+   "segments": [
+    {
+     "type": "prepare",
+     "dur": 5,
+     "name": "準備",
+     "how": "戴好拳套或護具，站到訓練位置"
+    },
+    {
+     "type": "work",
+     "dur": 30,
+     "name": "頸部側彎・左",
+     "how": "右手輕放頭頂，把頭往左肩拉，肩膀往下沉"
+    },
+    {
+     "type": "rest",
+     "dur": 5,
+     "name": "換動作",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 30,
+     "name": "頸部側彎・右",
+     "how": "換邊，左手輕拉頭往右肩"
+    },
+    {
+     "type": "rest",
+     "dur": 5,
+     "name": "換動作",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 30,
+     "name": "肩膀交叉伸展・左",
+     "how": "左手伸直橫過胸前，右手扣住手肘往身體拉"
+    },
+    {
+     "type": "rest",
+     "dur": 5,
+     "name": "換動作",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 30,
+     "name": "肩膀交叉伸展・右",
+     "how": "換邊"
+    },
+    {
+     "type": "rest",
+     "dur": 5,
+     "name": "換動作",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 30,
+     "name": "三頭肌伸展・左",
+     "how": "左手舉高往後彎，右手壓左手肘"
+    },
+    {
+     "type": "rest",
+     "dur": 5,
+     "name": "換動作",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 30,
+     "name": "三頭肌伸展・右",
+     "how": "換邊"
+    },
+    {
+     "type": "rest",
+     "dur": 5,
+     "name": "換動作",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 45,
+     "name": "開門胸大肌伸展",
+     "how": "手臂靠牆或門框成 90 度，身體往前轉打開胸口"
+    },
+    {
+     "type": "rest",
+     "dur": 5,
+     "name": "換動作",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 45,
+     "name": "手腕前臂伸展",
+     "how": "手臂伸直掌心朝外，另一手把手指往回扳；手背也做一次"
+    },
+    {
+     "type": "rest",
+     "dur": 5,
+     "name": "換動作",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 45,
+     "name": "深呼吸放鬆",
+     "how": "坐或躺，吸 4 秒、停 2 秒、吐 6 秒"
+    }
+   ],
+   "tips": [
+    "伸展到微微緊就好，不要痛",
+    "每個動作保持呼吸，不要憋氣",
+    "練完 10 分鐘內做效果最好"
+   ],
+   "total": 360
+  },
+  {
+   "slug": "full-body-cooldown-8-minutes",
+   "cat": "stretch",
+   "name": "全身緩和伸展 8 分鐘",
+   "level": "入門",
+   "equip": "墊子",
+   "summary": "拳擊後全身放鬆：小腿、腿後側、髖屈肌、下背與肩膀，8 分鐘讓心跳慢慢降下來。",
+   "theme": "voice",
+   "warn": 0,
+   "combo": {
+    "on": false,
+    "level": "basic",
+    "pace": "mid"
+   },
+   "segments": [
+    {
+     "type": "prepare",
+     "dur": 5,
+     "name": "準備",
+     "how": "戴好拳套或護具，站到訓練位置"
+    },
+    {
+     "type": "work",
+     "dur": 60,
+     "name": "原地踏步緩和",
+     "how": "慢慢走，讓心跳降下來"
+    },
+    {
+     "type": "rest",
+     "dur": 5,
+     "name": "換動作",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 30,
+     "name": "小腿伸展・左",
+     "how": "弓箭步後腳打直腳跟踩地"
+    },
+    {
+     "type": "rest",
+     "dur": 5,
+     "name": "換動作",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 30,
+     "name": "小腿伸展・右",
+     "how": "換邊"
+    },
+    {
+     "type": "rest",
+     "dur": 5,
+     "name": "換動作",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 40,
+     "name": "髖屈肌伸展・左",
+     "how": "單膝跪地，骨盆往前推"
+    },
+    {
+     "type": "rest",
+     "dur": 5,
+     "name": "換動作",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 40,
+     "name": "髖屈肌伸展・右",
+     "how": "換邊"
+    },
+    {
+     "type": "rest",
+     "dur": 5,
+     "name": "換動作",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 50,
+     "name": "坐姿腿後側伸展",
+     "how": "坐地雙腿伸直，背打直往前趴"
+    },
+    {
+     "type": "rest",
+     "dur": 5,
+     "name": "換動作",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 50,
+     "name": "嬰兒式",
+     "how": "跪坐往前趴，手往前伸，放鬆下背"
+    },
+    {
+     "type": "rest",
+     "dur": 5,
+     "name": "換動作",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 30,
+     "name": "仰躺扭轉・左",
+     "how": "仰躺，右膝倒向左邊，看右邊"
+    },
+    {
+     "type": "rest",
+     "dur": 5,
+     "name": "換動作",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 30,
+     "name": "仰躺扭轉・右",
+     "how": "換邊"
+    },
+    {
+     "type": "rest",
+     "dur": 5,
+     "name": "換動作",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 40,
+     "name": "肩膀擴胸",
+     "how": "雙手在背後交扣，往下拉打開胸口"
+    },
+    {
+     "type": "rest",
+     "dur": 5,
+     "name": "換動作",
+     "how": ""
+    },
+    {
+     "type": "work",
+     "dur": 60,
+     "name": "躺平深呼吸",
+     "how": "全身放鬆，慢慢呼吸"
+    }
+   ],
+   "tips": [
+    "緩和運動能減少隔天肌肉痠痛",
+    "伸展時不要彈震",
+    "補充水分和蛋白質"
+   ],
+   "total": 515
+  }
+ ]
+}

@@ -1,21 +1,24 @@
 ---
 import '../styles/global.css';
-interface Props { title: string; description: string; bodyClass?: string }
-const { title, description, bodyClass = 's-idle' } = Astro.props;
+interface Props { title: string; description: string; bodyClass?: string; htmlClass?: string; jsonLd?: Record<string, unknown> }
+const { title, description, bodyClass = 's-idle', htmlClass = '', jsonLd } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
-const canonical = new URL(Astro.url.pathname, Astro.site);
+// GitHub Pages 的網址結尾都有 /（資料夾形式），canonical 跟著統一
+const canonical = new URL(Astro.url.pathname.replace(/\/?$/, '/'), Astro.site);
 ---
 <!doctype html>
-<html lang="zh-Hant">
+<html lang="zh-Hant" class={htmlClass}>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{title}</title>
 <meta name="description" content={description}>
 <link rel="canonical" href={canonical}>
 <meta property="og:title" content={title}>
 <meta property="og:description" content={description}>
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="RoundBell 拳擊計時器">
+<meta property="og:locale" content="zh_TW">
 <meta property="og:url" content={canonical}>
 <meta property="og:image" content={new URL(base + 'img/icon-512.png', Astro.site)}>
 <meta name="theme-color" content="#0e0e0e">
@@ -26,6 +29,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 <link rel="manifest" href={base + 'manifest.webmanifest'}>
 <link rel="icon" href={base + 'img/icon.svg'} type="image/svg+xml">
 <link rel="apple-touch-icon" href={base + 'img/apple-touch-icon.png'}>
+{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 </head>
 <body class={bodyClass}>
 <slot />

@@ -529,7 +529,7 @@ function openSettings(id) {
   $('btnDel').hidden = !(saved && Store.data.presets.length > 1);
   $('btnCopy').hidden = !saved;
   $('btnSave').textContent = Store.route ? '套用' : saved ? '儲存' : '儲存為新課表';
-  $('btnEditSeg').href = BASE + 'builder?s=' + encodeURIComponent(shareUrl(draft).split('?s=')[1]);
+  $('btnEditSeg').href = BASE + 'builder/?s=' + encodeURIComponent(shareUrl(draft).split('?s=')[1]);
   $('btnReset').hidden = !!Store.route;
   paintDraft();
   $('dSet').showModal();

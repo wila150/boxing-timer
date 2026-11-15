@@ -1,0 +1,254 @@
+{
+ "categories": [
+  {
+   "id": "punch",
+   "name": "出拳"
+  },
+  {
+   "id": "defense",
+   "name": "防守"
+  },
+  {
+   "id": "footwork",
+   "name": "步法"
+  },
+  {
+   "id": "conditioning",
+   "name": "體能"
+  },
+  {
+   "id": "warmup",
+   "name": "熱身"
+  },
+  {
+   "id": "stretch",
+   "name": "伸展"
+  }
+ ],
+ "moves": [
+  {
+   "id": "p1",
+   "cat": "punch",
+   "name": "刺拳（1）",
+   "sec": 60,
+   "how": "前手快速直線出拳，馬上收回"
+  },
+  {
+   "id": "p2",
+   "cat": "punch",
+   "name": "後手直拳（2）",
+   "sec": 60,
+   "how": "後腳跟轉、腰轉，後手直線打出"
+  },
+  {
+   "id": "p3",
+   "cat": "punch",
+   "name": "前手勾拳（3）",
+   "sec": 60,
+   "how": "手肘 90 度，用身體轉出橫向勾拳"
+  },
+  {
+   "id": "p4",
+   "cat": "punch",
+   "name": "後手勾拳（4）",
+   "sec": 60,
+   "how": "後手勾拳，重心轉到前腳"
+  },
+  {
+   "id": "p5",
+   "cat": "punch",
+   "name": "前手上勾拳（5）",
+   "sec": 60,
+   "how": "膝蓋微蹲，從下往上打"
+  },
+  {
+   "id": "p6",
+   "cat": "punch",
+   "name": "後手上勾拳（6）",
+   "sec": 60,
+   "how": "後腳蹬地往上打上勾拳"
+  },
+  {
+   "id": "p-12",
+   "cat": "punch",
+   "name": "1-2 連打",
+   "sec": 60,
+   "how": "刺拳接直拳，最基本的組合"
+  },
+  {
+   "id": "p-123",
+   "cat": "punch",
+   "name": "1-2-3 組合",
+   "sec": 60,
+   "how": "刺拳、直拳、前手勾拳"
+  },
+  {
+   "id": "p-body",
+   "cat": "punch",
+   "name": "打身體組合",
+   "sec": 60,
+   "how": "蹲低打腹部再起身打頭"
+  },
+  {
+   "id": "p-flurry",
+   "cat": "punch",
+   "name": "快速連打",
+   "sec": 30,
+   "how": "左右直拳最快速度"
+  },
+  {
+   "id": "d-slip",
+   "cat": "defense",
+   "name": "閃躲",
+   "sec": 60,
+   "how": "膝蓋微蹲，頭往左右移出拳線"
+  },
+  {
+   "id": "d-roll",
+   "cat": "defense",
+   "name": "潛避",
+   "sec": 60,
+   "how": "畫 U 字從拳下穿過"
+  },
+  {
+   "id": "d-block",
+   "cat": "defense",
+   "name": "格擋",
+   "sec": 60,
+   "how": "手套貼臉擋住，再反擊"
+  },
+  {
+   "id": "f-inout",
+   "cat": "footwork",
+   "name": "前後步法",
+   "sec": 60,
+   "how": "前腳先動後腳跟上"
+  },
+  {
+   "id": "f-lateral",
+   "cat": "footwork",
+   "name": "左右側移",
+   "sec": 60,
+   "how": "往哪邊移哪隻腳先動"
+  },
+  {
+   "id": "f-pivot",
+   "cat": "footwork",
+   "name": "轉身步",
+   "sec": 60,
+   "how": "以前腳為軸轉開角度"
+  },
+  {
+   "id": "c-burpee",
+   "cat": "conditioning",
+   "name": "波比跳",
+   "sec": 40,
+   "how": "下蹲、後跳成棒式、跳起"
+  },
+  {
+   "id": "c-mc",
+   "cat": "conditioning",
+   "name": "登山者",
+   "sec": 40,
+   "how": "手撐地快速交替提膝"
+  },
+  {
+   "id": "c-squatpunch",
+   "cat": "conditioning",
+   "name": "深蹲直拳",
+   "sec": 40,
+   "how": "站起時出左右直拳"
+  },
+  {
+   "id": "c-plank",
+   "cat": "conditioning",
+   "name": "棒式",
+   "sec": 45,
+   "how": "手肘撐地，身體成一直線"
+  },
+  {
+   "id": "c-twist",
+   "cat": "conditioning",
+   "name": "俄羅斯轉體出拳",
+   "sec": 40,
+   "how": "坐姿轉體出拳"
+  },
+  {
+   "id": "c-jj",
+   "cat": "conditioning",
+   "name": "開合跳",
+   "sec": 45,
+   "how": "輕盈落地手舉高"
+  },
+  {
+   "id": "c-rope",
+   "cat": "conditioning",
+   "name": "跳繩",
+   "sec": 120,
+   "how": "前腳掌輕跳"
+  },
+  {
+   "id": "w-wrist",
+   "cat": "warmup",
+   "name": "手腕繞環",
+   "sec": 30,
+   "how": "十指交扣繞手腕"
+  },
+  {
+   "id": "w-shoulder",
+   "cat": "warmup",
+   "name": "肩膀繞環",
+   "sec": 30,
+   "how": "手臂大繞圈"
+  },
+  {
+   "id": "w-hop",
+   "cat": "warmup",
+   "name": "原地小跳步",
+   "sec": 45,
+   "how": "前腳掌輕跳"
+  },
+  {
+   "id": "s-neck",
+   "cat": "stretch",
+   "name": "頸部側彎",
+   "sec": 30,
+   "how": "頭往側邊拉，肩膀下沉"
+  },
+  {
+   "id": "s-shoulder",
+   "cat": "stretch",
+   "name": "肩膀交叉伸展",
+   "sec": 30,
+   "how": "手臂橫過胸前拉"
+  },
+  {
+   "id": "s-tricep",
+   "cat": "stretch",
+   "name": "三頭肌伸展",
+   "sec": 30,
+   "how": "手舉高往後彎壓手肘"
+  },
+  {
+   "id": "s-wrist",
+   "cat": "stretch",
+   "name": "手腕前臂伸展",
+   "sec": 45,
+   "how": "手指往回扳"
+  },
+  {
+   "id": "s-hip",
+   "cat": "stretch",
+   "name": "髖屈肌伸展",
+   "sec": 40,
+   "how": "單膝跪地骨盆往前推"
+  },
+  {
+   "id": "s-breath",
+   "cat": "stretch",
+   "name": "深呼吸",
+   "sec": 45,
+   "how": "吸 4 秒吐 6 秒"
+  }
+ ]
+}
