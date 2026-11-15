@@ -1,6 +1,7 @@
 // RoundBell 離線快取：先拿網路，斷網用快取
 const CACHE = 'roundbell-v1';
-const FILES = ['/', '/manifest.webmanifest', '/img/icon.svg', '/img/icon-192.png', '/img/icon-512.png'];
+// 相對路徑＝跟著 sw.js 所在位置（GitHub Pages 子路徑也適用）
+const FILES = ['./', './manifest.webmanifest', './img/icon.svg', './img/icon-192.png', './img/icon-512.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(FILES)).then(() => self.skipWaiting()));
