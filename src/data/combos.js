@@ -2,13 +2,22 @@
 // 數字拳：1 刺拳 2 後手直拳 3 前手勾拳 4 後手勾拳 5 前手上勾拳 6 後手上勾拳
 // 防守／步伐：閃＝閃躲、潛避、格擋、後撤、前進、側移
 
+// 英文口號＝教練實際喊法（2026-11-16 使用者提供；閃躲／潛避／前進用標準英文 Slip／Roll／Step in）
 export const PUNCH = {
-  1: { say: '一', name: '刺拳' },
-  2: { say: '二', name: '直拳' },
-  3: { say: '三', name: '左勾' },
-  4: { say: '四', name: '右勾' },
-  5: { say: '五', name: '左上勾' },
-  6: { say: '六', name: '右上勾' },
+  1: { say: '一', name: '刺拳', en: 'Jab' },
+  2: { say: '二', name: '直拳', en: 'Straight Right' },
+  3: { say: '三', name: '左勾', en: 'Hook' },
+  4: { say: '四', name: '右勾', en: 'Hook' },
+  5: { say: '五', name: '左上勾', en: 'Uppercut' },
+  6: { say: '六', name: '右上勾', en: 'Uppercut' },
+};
+export const MOVE = {
+  閃: { en: 'Slip', name: '閃躲' },
+  潛避: { en: 'Roll', name: '潛避' },
+  格擋: { en: 'Cover up', name: '防禦架勢' },
+  後撤: { en: 'Back step', name: '後退步' },
+  前進: { en: 'Step in', name: '前進' },
+  側移: { en: 'Side step', name: '側移' },
 };
 
 export const BASIC = [
@@ -25,18 +34,30 @@ export const ADVANCED = [
 // 節奏：兩次喊拳之間的基本間隔（毫秒），實際會 ±20% 隨機，招數越長間隔越長
 export const PACE = { slow: 7000, mid: 4500, fast: 2800 };
 
-export function parseCombo(str) {
+// lang：'en' 英文口號（1-2 連在一起念 One-two）／'zh' 中文數字
+export function parseCombo(str, lang = 'en') {
   const parts = str.split('-');
-  return {
-    text: parts.join('-'),
-    say: parts.map((p) => (PUNCH[p] ? PUNCH[p].say : p)).join('、'),
-    desc: parts.map((p) => (PUNCH[p] ? PUNCH[p].name : p)).join('・'),
-    len: parts.length,
-  };
+  const name = (p) => (PUNCH[p] ? PUNCH[p].name : MOVE[p] ? MOVE[p].name : p);
+  if (lang === 'zh') {
+    return {
+      text: parts.join('-'),
+      say: parts.map((p) => (PUNCH[p] ? PUNCH[p].say : p)).join('、'),
+      desc: parts.map(name).join('・'),
+      len: parts.length, lang,
+    };
+  }
+  const en = [], zh = [];
+  for (let i = 0; i < parts.length; i++) {
+    if (parts[i] === '1' && parts[i + 1] === '2') { en.push('One-two'); zh.push('刺拳＋直拳'); i++; continue; }
+    const p = parts[i];
+    en.push(PUNCH[p] ? PUNCH[p].en : MOVE[p] ? MOVE[p].en : p);
+    zh.push(name(p));
+  }
+  return { text: en.join(' · '), say: en.join(', '), desc: zh.join('・'), len: parts.length, lang };
 }
 
-export function comboPool(level) {
-  return (level === 'adv' ? BASIC.slice(4).concat(ADVANCED) : BASIC).map(parseCombo);
+export function comboPool(level, lang = 'en') {
+  return (level === 'adv' ? BASIC.slice(4).concat(ADVANCED) : BASIC).map((c) => parseCombo(c, lang));
 }
 
 // 休息時的技術提醒（輪播）

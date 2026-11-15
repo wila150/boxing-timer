@@ -51,7 +51,7 @@ body.running .top .ibtn,body.running .nav,body.is-paused .nav,body.running .bott
 .combo{min-height:2.9em;display:flex;flex-direction:column;justify-content:center;align-items:center;font-size:clamp(28px,8vw,60px);font-weight:900;letter-spacing:.06em;line-height:1.1;padding:4px 8px}
 .combo small{display:block;font-size:clamp(13px,3.6vw,18px);font-weight:600;opacity:.85;letter-spacing:.08em;margin-top:4px}
 .combo small.tip{font-size:clamp(15px,4.2vw,22px);opacity:.95}
-.combo .pop{display:inline-block;animation:pop .25s ease-out}
+.combo .pop{display:inline-block;max-width:100%;animation:pop .25s ease-out}
 @keyframes pop{from{transform:scale(.7);opacity:.2}to{transform:none;opacity:1}}
 .clock{font-family:'Oswald','SF Pro Display','Roboto Condensed','Helvetica Neue',Arial,sans-serif;font-weight:700;font-variant-numeric:tabular-nums;
   font-size:min(34vw,44vh);line-height:.95;letter-spacing:-.02em;transition:opacity .2s}
@@ -224,3 +224,7 @@ body:not(.s-idle):not(.page) .below{display:none}
 .install button{height:36px;border-radius:10px;padding:0 14px;font-weight:800}
 #installBtn{background:var(--red);color:#fff}
 #installX{background:transparent;color:var(--muted);padding:0 8px}
+.combo .pop i{font-style:normal;white-space:nowrap}
+.combo .pop em{font-style:normal;opacity:.6}
+.combo .pop.sm{font-size:.72em}
+.combo .pop.xs{font-size:.56em}

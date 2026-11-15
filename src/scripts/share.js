@@ -24,7 +24,7 @@ const text = (v, max) => String(v ?? '').replace(/[\u0000-\u001f]/g, '').slice(0
 export function encodePreset(p) {
   const o = {
     n: p.name, t: p.theme, w: p.warn, h: p.half ? 1 : 0,
-    c: p.combo && p.combo.on ? [p.combo.level === 'adv' ? 2 : 1, PACES.indexOf(p.combo.pace) + 1] : 0,
+    c: p.combo && p.combo.on ? [p.combo.level === 'adv' ? 2 : 1, PACES.indexOf(p.combo.pace) + 1, p.combo.lang === 'zh' ? 2 : 1] : 0,
   };
   if (p.segments) o.s = p.segments.map((s) => [s.type[0], s.dur, s.name || '', s.how || '']);
   else Object.assign(o, { p: p.prep, r: p.work, b: p.rest, k: p.rounds });
@@ -46,8 +46,8 @@ export function decodePreset(str) {
       warn: int(o.w ?? 10, LIMIT.warn),
       half: !!o.h,
       combo: Array.isArray(o.c)
-        ? { on: true, level: o.c[0] === 2 ? 'adv' : 'basic', pace: PACES[(o.c[1] || 2) - 1] || 'mid' }
-        : { on: false, level: 'basic', pace: 'mid' },
+        ? { on: true, level: o.c[0] === 2 ? 'adv' : 'basic', pace: PACES[(o.c[1] || 2) - 1] || 'mid', lang: o.c[2] === 2 ? 'zh' : 'en' }
+        : { on: false, level: 'basic', pace: 'mid', lang: 'en' },
     };
     if (Array.isArray(o.s)) {
       if (!o.s.length || o.s.length > 120) return null;
