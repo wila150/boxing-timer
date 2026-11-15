@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import moves from '../data/moves.json';
+---
+<Base title="拳擊課表編輯器｜自訂訓練、免登入分享連結｜RoundBell" description="自己排拳擊訓練課表：從出拳、防守、步法、體能、伸展動作庫挑動作、設秒數，一鍵產生免登入分享連結，傳給拳友直接用語音計時器開練。" bodyClass="page">
+  <SiteHeader />
+  <main class="wrap builder">
+    <h1 class="page-h1">課表編輯器</h1>
+    <p class="lead">點動作庫的動作加進課表，調整秒數和順序。做好可以直接開始、存到這支手機，或複製連結分享（不用註冊，連結本身就是課表）。</p>
+
+    <section class="bx">
+      <label class="lbl" for="bName">課表名稱</label>
+      <input type="text" id="bName" maxlength="30" value="我的拳擊課表">
+      <div class="grid4">
+        <label>準備<input type="number" id="bPrep" min="0" max="60" step="5" value="10"><small>秒</small></label>
+        <label>動作間休息<input type="number" id="bRest" min="0" max="300" step="5" value="15"><small>秒</small></label>
+        <label>重複組數<input type="number" id="bSets" min="1" max="10" step="1" value="1"><small>組</small></label>
+        <label>組間休息<input type="number" id="bSetRest" min="0" max="600" step="10" value="60"><small>秒</small></label>
+      </div>
+      <div class="grid4">
+        <label>最後警告<input type="number" id="bWarn" min="0" max="30" step="1" value="5"><small>秒</small></label>
+        <label>音效<select id="bTheme"><option value="bell">傳統銅鐘</option><option value="beep">電子蜂鳴</option><option value="voice">語音報時（念動作名）</option></select></label>
+        <label>教練喊拳<select id="bCombo"><option value="">不喊</option><option value="basic">基礎</option><option value="adv">進階</option></select></label>
+        <label>喊拳節奏<select id="bPace"><option value="slow">慢</option><option value="mid" selected>中</option><option value="fast">快</option></select></label>
+      </div>
+    </section>
+
+    <section class="bx">
+      <h2>動作庫</h2>
+      <div class="tabs" id="tabs"></div>
+      <div class="lib" id="lib"></div>
+    </section>
+
+    <section class="bx">
+      <h2>我的課表 <span class="muted" id="sum"></span></h2>
+      <ol class="items" id="items"></ol>
+      <p class="muted empty-hint" id="emptyHint">還沒有動作，從上面的動作庫點選加入。</p>
+    </section>
+
+    <div class="bar-actions">
+      <button class="btn-red" id="bStart">▶ 開始訓練</button>
+      <button class="btn-ghost" id="bSave">＋ 存到我的課表</button>
+      <button class="btn-ghost" id="bShare">🔗 複製分享連結</button>
+      <button class="btn-ghost" id="bClear">清空</button>
+    </div>
+  </main>
+  <div class="toast" id="toast"></div>
+  <script type="application/json" id="movesData" set:html={JSON.stringify(moves)} />
+  <script src="../scripts/builder.js"></script>
+</Base>

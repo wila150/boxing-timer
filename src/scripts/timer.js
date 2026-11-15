@@ -26,11 +26,13 @@ const Store = {
   load() {
     let d = null;
     try { d = JSON.parse(localStorage.getItem(KEY)); } catch {}
-    if (!d || !Array.isArray(d.presets) || !d.presets.length) d = { presets: BUILTIN.map((p) => structuredClone(p)), activeId: 'pro', log: [] };
+    const fresh = !d || !Array.isArray(d.presets) || !d.presets.length;
+    if (fresh) d = { presets: BUILTIN.map((p) => structuredClone(p)), activeId: 'pro', log: [] };
     d.presets.forEach((p) => { p.combo = Object.assign({}, DEF_COMBO, p.combo); });
     d.settings = Object.assign({ volume: 90, vibrate: true, tips: true }, d.settings);
     d.log = Array.isArray(d.log) ? d.log : [];
     this.data = d;
+    if (fresh) this.save(); // 先存一份，編輯器才能直接加課表進來
   },
   save() { try { localStorage.setItem(KEY, JSON.stringify(this.data)); } catch {} },
   get active() {
