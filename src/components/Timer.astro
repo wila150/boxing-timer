@@ -78,10 +78,18 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
           <div class="seg" id="fPace"><button type="button" data-v="slow">慢</button><button type="button" data-v="mid">中</button><button type="button" data-v="fast">快</button></div>
           <div class="listen"><button type="button" id="tryCombo">🗣 試聽喊拳</button></div>
         </div>
-        <p class="note">英文口號：Jab＝刺拳・Straight Right＝直拳・One-two＝刺拳＋直拳・Hook＝勾拳・Uppercut＝上擊拳・Cover up＝防禦架勢・Back step＝後退步・Side step＝側移・Slip＝閃躲・Roll＝潛避・Step in＝前進<br>中文數字：1 刺拳・2 直拳・3 左勾・4 右勾・5 左上勾・6 右上勾（右撇子正架）</p>
+        <p class="note">英文口號：Jab＝刺拳・Right＝直拳・One-two＝刺拳＋直拳・Hook＝勾拳・Uppercut＝上擊拳・Cover up＝防禦架勢・Back step＝後退步・Side step＝側移・Slip＝閃躲・Roll＝潛避・Step in＝前進<br>中文數字：1 刺拳・2 直拳・3 左勾・4 右勾・5 左上勾・6 右上勾（右撇子正架）</p>
       </div>
     </div>
 
+    <div class="group">
+      <div class="field"><div class="fl">🗣 英文語音（喊拳）</div><select id="fVoiceEn" class="sel"></select></div>
+      <div class="field"><div class="fl">🗣 中文語音（報時、中文數字）</div><select id="fVoiceZh" class="sel"></select></div>
+      <div class="field"><div class="fl">聲音高低 <output id="oPitch"></output></div>
+        <div class="step"><span class="pl">低沉</span><input type="range" id="fPitch" min="0.5" max="1.5" step="0.1"><span class="pl">高</span></div>
+      </div>
+      <p class="note">選了會馬上試念一次。♂ 是男聲（從名稱判斷）。能選哪些聲音由手機決定：iPhone 可到「設定 → 輔助使用 → 朗讀內容 → 聲音」下載更多英文男聲（例如 Aaron、Fred），Android 在「文字轉語音」設定裡換。<span id="voiceNone" hidden><br>⚠ 這個瀏覽器目前抓不到英文語音，會用預設聲音念。</span></p>
+    </div>
     <div class="tog"><div>休息時顯示技術提醒<small>休息倒數時輪播小技巧</small></div><input type="checkbox" id="fTips"></div>
     <div class="field">
       <div class="fl">音量 <output id="oVol"></output></div>

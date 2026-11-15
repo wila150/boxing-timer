@@ -5,7 +5,7 @@
 // 英文口號＝教練實際喊法（2026-11-16 使用者提供；閃躲／潛避／前進用標準英文 Slip／Roll／Step in）
 export const PUNCH = {
   1: { say: '一', name: '刺拳', en: 'Jab' },
-  2: { say: '二', name: '直拳', en: 'Straight Right' },
+  2: { say: '二', name: '直拳', en: 'Right' },
   3: { say: '三', name: '左勾', en: 'Hook' },
   4: { say: '四', name: '右勾', en: 'Hook' },
   5: { say: '五', name: '左上勾', en: 'Uppercut' },

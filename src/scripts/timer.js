@@ -29,7 +29,7 @@ const Store = {
     const fresh = !d || !Array.isArray(d.presets) || !d.presets.length;
     if (fresh) d = { presets: BUILTIN.map((p) => structuredClone(p)), activeId: 'pro', log: [] };
     d.presets.forEach((p) => { p.combo = Object.assign({}, DEF_COMBO, p.combo); });
-    d.settings = Object.assign({ volume: 90, vibrate: true, tips: true }, d.settings);
+    d.settings = Object.assign({ volume: 90, vibrate: true, tips: true, voiceEn: '', voiceZh: '', pitch: 0.9 }, d.settings);
     d.log = Array.isArray(d.log) ? d.log : [];
     this.data = d;
     if (fresh) this.save(); // 先存一份，編輯器才能直接加課表進來
@@ -156,14 +156,32 @@ const Audio = (() => {
   return { render, ensure, play, cancel };
 })();
 
+// 語音：可在設定選手機上有的聲音；「自動」優先挑男聲（名稱判斷，各系統聲音不同）
+const MALE = /\bmale\b|daniel|aaron|fred|alex\b|\btom\b|rishi|arthur|gordon|oliver|david|\bguy\b|\bmark\b|james|ryan|andrew|brian|christopher|eric|roger|george|thomas|reed|rocko|grandpa|ralph|albert|yunjhe|zhiwei|kangkang|yunxi|yunyang|yunjian|li-mu|liang|hanhan-male/i;
+const FEMALE = /female|samantha|karen|moira|tessa|victoria|zira|aria|jenny|susan|hazel|libby|sonia|meijia|sin-ji|ting-ting|hsiaochen|hsiaoyu|xiaoxiao|yating|hanhan/i;
 const Voice = {
+  list: [],
+  refresh() { try { this.list = speechSynthesis.getVoices() || []; } catch { this.list = []; } return this.list; },
+  of(lang) { const k = lang.slice(0, 2); return this.refresh().filter((v) => v.lang && v.lang.toLowerCase().startsWith(k)); },
+  isMale(v) { return MALE.test(v.name) && !FEMALE.test(v.name.replace(/\bmale\b/i, '')); },
+  pick(lang) {
+    const want = Store.data.settings[lang.startsWith('en') ? 'voiceEn' : 'voiceZh'];
+    const vs = this.of(lang);
+    if (want) { const v = vs.find((x) => x.voiceURI === want || x.name === want); if (v) return v; }
+    const local = lang.toLowerCase();
+    const sameLoc = (v) => v.lang.toLowerCase().replace('_', '-') === local;
+    return vs.find((v) => this.isMale(v) && sameLoc(v)) || vs.find((v) => this.isMale(v)) || vs.find(sameLoc) || vs[0] || null;
+  },
   unlock() { try { speechSynthesis.cancel(); speechSynthesis.speak(new SpeechSynthesisUtterance('')); } catch {} },
   // 每次念之前先清空佇列，避免語速太快聲音打架
   say(text, rate = 1.05, lang = 'zh-TW') {
     try {
       speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(text);
-      u.lang = lang; u.rate = rate; u.volume = Store.data.settings.volume / 100;
+      const v = this.pick(lang);
+      if (v) { try { u.voice = v; } catch {} } // 指定失敗就用預設聲音，不要整句不念
+      u.lang = v ? v.lang : lang; u.rate = rate; u.pitch = Store.data.settings.pitch;
+      u.volume = Store.data.settings.volume / 100;
       speechSynthesis.speak(u);
     } catch {}
   },
@@ -528,6 +546,7 @@ function paintDraft() {
   $('fVol').value = Store.data.settings.volume; $('oVol').textContent = Store.data.settings.volume + '%';
   $('fVib').checked = !!Store.data.settings.vibrate;
   $('fTips').checked = !!Store.data.settings.tips;
+  paintVoices();
 }
 function openSettings(id) {
   editingId = Store.route ? 'route' : id;
@@ -568,6 +587,23 @@ $('fVol').addEventListener('input', (e) => { Store.data.settings.volume = +e.tar
 $('fVol').addEventListener('change', () => { Audio.ensure(); Audio.render().then(() => Audio.play('start', draft.theme, performance.now())); });
 $('fVib').addEventListener('change', (e) => { Store.data.settings.vibrate = e.target.checked; Store.save(); if (e.target.checked && navigator.vibrate) navigator.vibrate(200); });
 $('fTips').addEventListener('change', (e) => { Store.data.settings.tips = e.target.checked; Store.save(); });
+function paintVoices() {
+  const fill = (id, lang, key) => {
+    const vs = Voice.of(lang), cur = Store.data.settings[key], auto = Voice.pick(lang);
+    $(id).innerHTML = `<option value="">自動（優先男聲${auto ? '：' + esc(auto.name) : ''}）</option>`
+      + vs.map((v) => `<option value="${esc(v.voiceURI)}"${v.voiceURI === cur ? ' selected' : ''}>${Voice.isMale(v) ? '♂ ' : ''}${esc(v.name)}（${esc(v.lang)}）</option>`).join('');
+    $(id).disabled = !vs.length;
+  };
+  fill('fVoiceEn', 'en-US', 'voiceEn'); fill('fVoiceZh', 'zh-TW', 'voiceZh');
+  $('voiceNone').hidden = Voice.of('en-US').length > 0;
+  $('fPitch').value = Store.data.settings.pitch; $('oPitch').textContent = pitchLabel(Store.data.settings.pitch);
+}
+const pitchLabel = (v) => (v <= 0.7 ? '很低沉' : v < 0.95 ? '低沉' : v <= 1.05 ? '原本' : '偏高') + `（${(+v).toFixed(1)}）`;
+try { speechSynthesis.addEventListener('voiceschanged', () => { if ($('dSet').open) paintVoices(); }); } catch {}
+$('fVoiceEn').addEventListener('change', (e) => { Store.data.settings.voiceEn = e.target.value; Store.save(); Voice.unlock(); Voice.say('One-two, Hook, Right', 1.0, 'en-US'); });
+$('fVoiceZh').addEventListener('change', (e) => { Store.data.settings.voiceZh = e.target.value; Store.save(); Voice.unlock(); Voice.say('第一回合，開始'); });
+$('fPitch').addEventListener('input', (e) => { Store.data.settings.pitch = +e.target.value; $('oPitch').textContent = pitchLabel(+e.target.value); Store.save(); });
+$('fPitch').addEventListener('change', () => { Voice.unlock(); Voice.say('Jab, One-two, Uppercut', 1.0, 'en-US'); });
 document.querySelector('.listen').addEventListener('click', (e) => {
   const k = e.target.dataset.try; if (!k) return;
   Audio.ensure(); Audio.cancel();
@@ -698,4 +734,4 @@ requestAnimationFrame(loop);
 if ('serviceWorker' in navigator && import.meta.env.PROD) window.addEventListener('load', () => navigator.serviceWorker.register(BASE + 'sw.js', { scope: BASE }).catch(() => {}));
 
 // 給測試用
-window.__rb = { Engine, Store };
+window.__rb = { Engine, Store, Voice };
