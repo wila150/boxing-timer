@@ -24,7 +24,7 @@ const text = (v, max) => String(v ?? '').replace(/[\u0000-\u001f]/g, '').slice(0
 export function encodePreset(p) {
   const o = {
     n: p.name, t: p.theme, w: p.warn, h: p.half ? 1 : 0,
-    c: p.combo && p.combo.on ? [p.combo.level === 'adv' ? 2 : 1, PACES.indexOf(p.combo.pace) + 1, ({ en: 1, zh: 2, ja: 3 })[p.combo.lang] || 1, ['normal', 'urgent', 'max'].indexOf(p.combo.intensity || 'urgent') + 1] : 0,
+    c: p.combo && p.combo.on ? [p.combo.level === 'adv' ? 2 : 1, PACES.indexOf(p.combo.pace) + 1, 1, ['normal', 'urgent', 'max'].indexOf(p.combo.intensity || 'urgent') + 1] : 0,
   };
   if (p.segments) o.s = p.segments.map((s) => [s.type[0], s.dur, s.name || '', s.how || '']);
   else Object.assign(o, { p: p.prep, r: p.work, b: p.rest, k: p.rounds });
@@ -46,8 +46,8 @@ export function decodePreset(str) {
       warn: int(o.w ?? 10, LIMIT.warn),
       half: !!o.h,
       combo: Array.isArray(o.c)
-        ? { on: true, level: o.c[0] === 2 ? 'adv' : 'basic', pace: PACES[(o.c[1] || 2) - 1] || 'mid', lang: ['en', 'zh', 'ja'][(o.c[2] || 1) - 1] || 'en', intensity: ['normal', 'urgent', 'max'][(o.c[3] || 2) - 1] || 'urgent' }
-        : { on: false, level: 'basic', pace: 'mid', lang: 'en', intensity: 'urgent' },
+        ? { on: true, level: o.c[0] === 2 ? 'adv' : 'basic', pace: PACES[(o.c[1] || 2) - 1] || 'mid', intensity: ['normal', 'urgent', 'max'][(o.c[3] || 2) - 1] || 'urgent' }
+        : { on: false, level: 'basic', pace: 'mid', intensity: 'urgent' },
     };
     if (Array.isArray(o.s)) {
       if (!o.s.length || o.s.length > 120) return null;
