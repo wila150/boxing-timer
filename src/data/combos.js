@@ -22,9 +22,9 @@ export const MOVE = {
   側移: { en: 'Side step', name: '側移' },
 };
 
-// 真人配音 public/audio/coach.mp3（使用者 11/16 用 Neo 國賢配好：駕補、萬兔、戶股、阿把、賴抖）
+// 真人配音 public/audio/coach.mp3（使用者 11/16 用 Neo 國賢配好：駕補。萬兔。戶股、阿把、賴抖；第二版 11:23）
 // 每個字在檔案裡的 [開始, 結束] 秒數（用音量包絡切出來的）
-export const CLIP = { Jab: [0.10, 0.53], 'One-two': [0.62, 1.20], Hook: [1.28, 1.76], Upper: [1.85, 2.205], Right: [2.205, 2.62] };
+export const CLIP = { Jab: [0.14, 0.58], 'One-two': [0.71, 1.23], Hook: [1.39, 1.88], Upper: [2.09, 2.335], Right: [2.335, 2.70] };
 
 // 組合之間偶爾穿插的鼓勵／提醒
 export const CHEER = [['Hands up!', '手舉高'], ['Nice punch!', '好拳'], ['Relax!', '放輕鬆'], ['Keep moving!', '腳步別停']];
