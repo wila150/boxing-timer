@@ -71,6 +71,10 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
         <div class="field"><div class="fl">難度</div>
           <div class="seg" id="fLevel"><button type="button" data-v="basic">基礎（1～6 數字拳）</button><button type="button" data-v="adv">進階（加閃躲、潛避、格擋、步伐）</button></div>
         </div>
+        <div class="field"><div class="fl">節奏感</div>
+          <div class="seg" id="fInt"><button type="button" data-v="normal">一般</button><button type="button" data-v="urgent">急促</button><button type="button" data-v="max">超急促</button></div>
+          <p class="note" style="padding:6px 0 0">急促：語速變快、間隔變短，回合後段越喊越密，最後 10 秒喊「Last ten! Go go go!」</p>
+        </div>
         <div class="field"><div class="fl">喊法</div>
           <div class="seg" id="fCLang"><button type="button" data-v="en">英文口號（Jab、One-two…）</button><button type="button" data-v="zh">中文數字（一、二、三）</button></div>
         </div>

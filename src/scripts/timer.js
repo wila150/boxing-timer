@@ -7,7 +7,14 @@ const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const fmt = (ms) => { const s = Math.max(0, Math.ceil(ms / 1000)), m = Math.floor(s / 60); return m + ':' + String(s % 60).padStart(2, '0'); };
 const fmtSec = (s) => fmt(s * 1000);
-const DEF_COMBO = { on: false, level: 'basic', pace: 'mid', lang: 'en' };
+const DEF_COMBO = { on: false, level: 'basic', pace: 'mid', lang: 'en', intensity: 'urgent' };
+// 節奏感：語速（英／中）、間隔倍率、回合後段越喊越密、最後警告喊一句催促
+const INTENSITY = {
+  normal: { en: 1.0, zh: 1.15, gap: 1, ramp: 0, urge: false },
+  urgent: { en: 1.25, zh: 1.3, gap: 0.8, ramp: 0.3, urge: true },
+  max: { en: 1.45, zh: 1.45, gap: 0.62, ramp: 0.4, urge: true },
+};
+const intensityOf = (c) => INTENSITY[(c && c.intensity) || 'urgent'] || INTENSITY.urgent;
 
 /* =========================================================
  * Store：本機儲存（課表、設定、訓練紀錄）
@@ -189,7 +196,7 @@ const Voice = {
 };
 
 // 英文口號用英文語音念，中文數字用中文語音
-function sayCombo(c) { if (c.lang === 'zh') Voice.say(c.say, 1.15); else Voice.say(c.say, 1.0, 'en-US'); }
+function sayCombo(c, combo) { const k = intensityOf(combo); if (c.lang === 'zh') Voice.say(c.say, k.zh); else Voice.say(c.say, k.en, 'en-US'); }
 
 const Wake = {
   lock: null, want: false,
@@ -283,15 +290,19 @@ const Engine = {
       ev.push({ t: start, sound: 'start', say: ph.name ? ph.name + '，開始' : '第' + ph.round + '回合，開始', vib: [400] });
       if (p.half && ph.dur >= 60) ev.push({ t: start + ph.dur * 500, sound: 'half', say: '一半' });
       const warn = this.warnOf(ph);
-      if (warn) ev.push({ t: end - warn * 1000, sound: 'warn', say: '最後' + warn + '秒', vib: [120, 80, 120], warn: true });
+      const K = intensityOf(combo);
+      const urge = combo.on && K.urge ? (combo.lang === 'zh' ? '最後衝刺！加油加油！' : `Last ${warn === 10 ? 'ten' : warn}! Go go go!`) : '';
+      if (warn) ev.push({ t: end - warn * 1000, sound: 'warn', say: '最後' + warn + '秒', vib: [120, 80, 120], warn: true, urge });
       // 教練喊拳：鐘聲後 2.5 秒開始，進入最後警告前 1.5 秒停
       if (pool) {
         const stop = end - warn * 1000 - 1500;
-        let t = Math.max(start + 2500, now + 1200), prev = null;
+        let t = Math.max(start + 2000, now + 1200), prev = null;
         while (t < stop) {
           let c; do { c = pool[Math.floor(Math.random() * pool.length)]; } while (pool.length > 1 && c === prev);
           ev.push({ t, combo: c }); prev = c;
-          t += PACE[combo.pace] * (0.8 + Math.random() * 0.4) + (c.len - 2) * 350;
+          // 越接近回合結束間隔越短（急促感）
+          const prog = Math.min(1, Math.max(0, (t - start) / (stop - start)));
+          t += (PACE[combo.pace] * (0.85 + Math.random() * 0.3) + (c.len - 2) * 300) * K.gap * (1 - K.ramp * prog);
         }
       }
       ev.push(i === last ? { t: end, sound: 'finish', say: '訓練完成，辛苦了', vib: [600, 200, 600] } : { t: end, sound: 'end', vib: [300, 120, 300] });
@@ -311,9 +322,12 @@ const Engine = {
     this.idx = cur.i;
   },
   fire(e, now) {
-    if (e.combo) { this.combo = { ...e.combo, at: now }; sayCombo(e.combo); }
-    else if (e.warn) { this.combo = null; Voice.stop(); }
-    if (this.preset.theme === 'voice' && e.say) Voice.say(e.say);
+    if (e.combo) { this.combo = { ...e.combo, at: now }; sayCombo(e.combo, this.preset.combo); }
+    else if (e.warn) {
+      this.combo = null; Voice.stop();
+      if (e.urge) { const k = intensityOf(this.preset.combo); Voice.say(e.urge, this.preset.combo.lang === 'zh' ? k.zh : k.en, this.preset.combo.lang === 'zh' ? 'zh-TW' : 'en-US'); }
+    }
+    if (this.preset.theme === 'voice' && e.say && !e.urge) Voice.say(e.say);
     if (e.vib && Store.data.settings.vibrate && navigator.vibrate) { try { navigator.vibrate(e.vib); } catch {} }
   },
   current(now = performance.now()) {
@@ -395,7 +409,7 @@ function render() {
   if (Engine.state === 'idle') {
     setBody('s-idle');
     setText('label', esc(p.name));
-    setText('combo', p.combo && p.combo.on ? `<small>教練喊拳：${p.combo.level === 'adv' ? '進階' : '基礎'}・${{ slow: '慢', mid: '中', fast: '快' }[p.combo.pace]}・${p.combo.lang === 'zh' ? '中文數字' : '英文口號'}</small>` : '');
+    setText('combo', p.combo && p.combo.on ? `<small>教練喊拳：${p.combo.level === 'adv' ? '進階' : '基礎'}・${{ slow: '慢', mid: '中', fast: '快' }[p.combo.pace]}・${{ normal: '一般', urgent: '急促', max: '超急促' }[p.combo.intensity || 'urgent']}・${p.combo.lang === 'zh' ? '中文數字' : '英文口號'}</small>` : '');
     setText('clock', fmtSec(p.segments ? totalSec(p) : p.work));
     setText('round', p.segments ? `${p.segments.length} 段・${workCount(p)} 個訓練段` : 'ROUND <b>–</b> / ' + p.rounds);
     setText('sub', p.segments ? '總長 ' + fmtSec(totalSec(p)) : `休息 ${fmtSec(p.rest)}・準備 ${p.prep} 秒・總長 ${fmtSec(totalSec(p))}`);
@@ -542,7 +556,7 @@ function paintDraft() {
   segOn('fTheme', draft.theme);
   $('fCombo').checked = draft.combo.on;
   $('comboOpts').hidden = !draft.combo.on;
-  segOn('fLevel', draft.combo.level); segOn('fPace', draft.combo.pace); segOn('fCLang', draft.combo.lang);
+  segOn('fLevel', draft.combo.level); segOn('fPace', draft.combo.pace); segOn('fCLang', draft.combo.lang); segOn('fInt', draft.combo.intensity || 'urgent');
   $('fVol').value = Store.data.settings.volume; $('oVol').textContent = Store.data.settings.volume + '%';
   $('fVib').checked = !!Store.data.settings.vibrate;
   $('fTips').checked = !!Store.data.settings.tips;
@@ -579,6 +593,7 @@ function bindStepper(box) {
 bindStepper($('fNums')); bindStepper($('fWarn'));
 $('fTheme').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; draft.theme = b.dataset.v; paintDraft(); });
 $('fLevel').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; draft.combo.level = b.dataset.v; paintDraft(); });
+$('fInt').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; draft.combo.intensity = b.dataset.v; paintDraft(); });
 $('fCLang').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; draft.combo.lang = b.dataset.v; paintDraft(); });
 $('fPace').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; draft.combo.pace = b.dataset.v; paintDraft(); });
 $('fCombo').addEventListener('change', (e) => { draft.combo.on = e.target.checked; paintDraft(); });
@@ -612,7 +627,7 @@ document.querySelector('.listen').addEventListener('click', (e) => {
 });
 $('tryCombo').addEventListener('click', () => {
   const pool = comboPool(draft.combo.level, draft.combo.lang), c = pool[Math.floor(Math.random() * pool.length)];
-  Voice.unlock(); sayCombo(c); toast(c.text + '（' + c.desc + '）');
+  Voice.unlock(); sayCombo(c, draft.combo); toast(c.text + '（' + c.desc + '）');
 });
 function readName() { return $('fName').value.trim().slice(0, 30) || '我的課表'; }
 $('btnSave').addEventListener('click', () => {
