@@ -76,19 +76,20 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
           <p class="note" style="padding:6px 0 0">急促：語速變快、間隔變短，回合後段越喊越密，最後 10 秒喊「Last ten! Go go go!」</p>
         </div>
         <div class="field"><div class="fl">喊法</div>
-          <div class="seg" id="fCLang"><button type="button" data-v="en">英文口號（Jab、One-two…）</button><button type="button" data-v="zh">中文數字（一、二、三）</button></div>
+          <div class="seg" id="fCLang"><button type="button" data-v="en">英文口號（Jab、One-two…）</button><button type="button" data-v="zh">中文數字（一、二、三）</button><button type="button" data-v="ja">日文口令（ジャブ、ワン・ツー…）</button></div>
         </div>
         <div class="field"><div class="fl">節奏</div>
           <div class="seg" id="fPace"><button type="button" data-v="slow">慢</button><button type="button" data-v="mid">中</button><button type="button" data-v="fast">快</button></div>
           <div class="listen"><button type="button" id="tryCombo">🗣 試聽喊拳</button></div>
         </div>
-        <p class="note">英文口號：Jab＝刺拳・Right＝直拳・One-two＝刺拳＋直拳・Hook＝勾拳・Uppercut＝上擊拳・Cover up＝防禦架勢・Back step＝後退步・Side step＝側移・Slip＝閃躲・Roll＝潛避・Step in＝前進<br>中文數字：1 刺拳・2 直拳・3 左勾・4 右勾・5 左上勾・6 右上勾（右撇子正架）</p>
+        <p class="note">英文口號：Jab＝刺拳・Right＝直拳・Body＝打腹・Sway＝後仰・One-two＝刺拳＋直拳・Hook＝勾拳・Uppercut＝上擊拳・Cover up＝防禦架勢・Back step＝後退步・Side step＝側移・Slip＝閃躲・Roll＝潛避・Step in＝前進<br>日文口令：ジャブ＝刺拳・ストレート＝直拳・ワン・ツー＝1-2・フック＝勾拳・アッパー＝上勾拳・ボディ＝打腹・ダッキング＝蹲閃・ウィービング＝U字搖閃・スウェー＝後仰・ブロック＝抱架・バックステップ／サイドステップ＝後退／側移・ガード上げて＝手舉高・ナイスパンチ＝好拳・リラックス＝放輕鬆<br>中文數字：1 刺拳・2 直拳・3 左勾・4 右勾・5 左上勾・6 右上勾（右撇子正架）</p>
       </div>
     </div>
 
     <div class="group">
       <div class="field"><div class="fl">🗣 英文語音（喊拳）</div><select id="fVoiceEn" class="sel"></select></div>
       <div class="field"><div class="fl">🗣 中文語音（報時、中文數字）</div><select id="fVoiceZh" class="sel"></select></div>
+      <div class="field"><div class="fl">🗣 日文語音（日文口令）</div><select id="fVoiceJa" class="sel"></select></div>
       <div class="field"><div class="fl">聲音高低 <output id="oPitch"></output></div>
         <div class="step"><span class="pl">低沉</span><input type="range" id="fPitch" min="0.5" max="1.5" step="0.1"><span class="pl">高</span></div>
       </div>

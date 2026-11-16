@@ -19,7 +19,7 @@ function opts() {
     prep: clamp($('bPrep').value, 0, 60), rest: clamp($('bRest').value, 0, 300),
     sets: clamp($('bSets').value, 1, 10), setRest: clamp($('bSetRest').value, 0, 600),
     warn: clamp($('bWarn').value, 0, 30), theme: $('bTheme').value,
-    combo: { on: !!$('bCombo').value, level: ($('bCombo').value || 'basic').replace('-zh', ''), pace: $('bPace').value, lang: $('bCombo').value.endsWith('-zh') ? 'zh' : 'en', intensity },
+    combo: { on: !!$('bCombo').value, level: ($('bCombo').value || 'basic').replace(/-(zh|ja)$/, ''), pace: $('bPace').value, lang: ($('bCombo').value.match(/-(zh|ja)$/) || [])[1] || 'en', intensity },
   };
 }
 function toPreset() {
@@ -39,7 +39,7 @@ function saveDraft() { try { localStorage.setItem(DRAFT_KEY, JSON.stringify({ it
 function applyOpts(o) {
   if (o.combo && o.combo.intensity) intensity = o.combo.intensity;
   $('bName').value = o.name; $('bPrep').value = o.prep; $('bRest').value = o.rest; $('bSets').value = o.sets; $('bSetRest').value = o.setRest;
-  $('bWarn').value = o.warn; $('bTheme').value = o.theme; $('bCombo').value = o.combo && o.combo.on ? o.combo.level + (o.combo.lang === 'zh' ? '-zh' : '') : ''; $('bPace').value = (o.combo && o.combo.pace) || 'mid';
+  $('bWarn').value = o.warn; $('bTheme').value = o.theme; $('bCombo').value = o.combo && o.combo.on ? o.combo.level + (o.combo.lang === 'zh' || o.combo.lang === 'ja' ? '-' + o.combo.lang : '') : ''; $('bPace').value = (o.combo && o.combo.pace) || 'mid';
 }
 
 function renderLib() {
