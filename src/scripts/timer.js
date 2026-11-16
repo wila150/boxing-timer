@@ -1,5 +1,5 @@
 // RoundBell 計時器：Store（本機資料）→ Audio／Voice／Wake（核心服務）→ Engine（狀態機）→ View（畫面）
-import { comboPool, cheerPool, urgeText, PACE, TIPS } from '../data/combos.js';
+import { comboPool, cheerPool, urgeText, CLIP, PACE, TIPS } from '../data/combos.js';
 import { decodePreset, shareUrl } from './share.js';
 
 const BASE = import.meta.env.BASE_URL.replace(/\/?$/, '/');
@@ -9,10 +9,11 @@ const fmt = (ms) => { const s = Math.max(0, Math.ceil(ms / 1000)), m = Math.floo
 const fmtSec = (s) => fmt(s * 1000);
 const DEF_COMBO = { on: false, level: 'basic', pace: 'mid', intensity: 'urgent' };
 // 節奏感：語速（英／中）、間隔倍率、回合後段越喊越密、最後警告喊一句催促
+// overlap：真人配音字與字之間吃掉多少秒的空白
 const INTENSITY = {
-  normal: { en: 1.0, zh: 1.15, gap: 1, ramp: 0, urge: false },
-  urgent: { en: 1.25, zh: 1.3, gap: 0.8, ramp: 0.3, urge: true },
-  max: { en: 1.45, zh: 1.45, gap: 0.62, ramp: 0.4, urge: true },
+  normal: { en: 1.0, zh: 1.15, gap: 1, ramp: 0, urge: false, overlap: 0 },
+  urgent: { en: 1.25, zh: 1.3, gap: 0.8, ramp: 0.3, urge: true, overlap: 0.07 },
+  max: { en: 1.45, zh: 1.45, gap: 0.62, ramp: 0.4, urge: true, overlap: 0.12 },
 };
 const intensityOf = (c) => INTENSITY[(c && c.intensity) || 'urgent'] || INTENSITY.urgent;
 
@@ -36,7 +37,7 @@ const Store = {
     const fresh = !d || !Array.isArray(d.presets) || !d.presets.length;
     if (fresh) d = { presets: BUILTIN.map((p) => structuredClone(p)), activeId: 'pro', log: [] };
     d.presets.forEach((p) => { p.combo = Object.assign({}, DEF_COMBO, p.combo); });
-    d.settings = Object.assign({ volume: 90, vibrate: true, tips: true, voiceEn: '', voiceZh: '', pitch: 0.9 }, d.settings);
+    d.settings = Object.assign({ volume: 90, vibrate: true, tips: true, coach: 'real', voiceEn: '', voiceZh: '', pitch: 0.9 }, d.settings);
     d.log = Array.isArray(d.log) ? d.log : [];
     this.data = d;
     if (fresh) this.save(); // 先存一份，編輯器才能直接加課表進來
@@ -160,7 +161,36 @@ const Audio = (() => {
     live.forEach((s) => { try { s.onended = null; s.stop(0); s.disconnect(); } catch {} });
     live.clear();
   }
-  return { render, ensure, play, cancel };
+  // 真人配音：整段 mp3 解碼一次，喊拳時切片接著播
+  let coach = null, coachP = null;
+  function loadCoach() {
+    if (coachP) return coachP;
+    const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+    if (!OAC) return (coachP = Promise.resolve());
+    coachP = fetch(import.meta.env.BASE_URL.replace(/\/?$/, '/') + 'audio/coach.mp3')
+      .then((r) => r.arrayBuffer())
+      .then((ab) => new Promise((ok, no) => new OAC(1, 1, SR).decodeAudioData(ab, ok, no)))
+      .then((b) => { coach = b; })
+      .catch(() => { coachP = null; });
+    return coachP;
+  }
+  // 全部字都有錄音才播，回傳 false 就改用系統語音
+  function sayWords(words, overlap = 0) {
+    if (!ctx || !coach || !words || !words.every((w) => CLIP[w])) return false;
+    let t = ctx.currentTime + 0.03;
+    words.forEach((w) => {
+      const [a, b] = CLIP[w], d = b - a;
+      const src = ctx.createBufferSource(), g = ctx.createGain();
+      src.buffer = coach; src.connect(g); g.connect(master);
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(1.6, t + 0.008);
+      g.gain.setValueAtTime(1.6, t + d - 0.012); g.gain.linearRampToValueAtTime(0, t + d);
+      src.start(t, a, d);
+      live.add(src); src.onended = () => live.delete(src);
+      t += d - overlap;
+    });
+    return true;
+  }
+  return { render, ensure, play, cancel, loadCoach, sayWords };
 })();
 
 // 語音：可在設定選手機上有的聲音；「自動」優先挑男聲（名稱判斷，各系統聲音不同）
@@ -196,7 +226,11 @@ const Voice = {
 };
 
 // 英文口號用英文語音念，中文數字用中文語音
-function sayCombo(c, combo) { const k = intensityOf(combo); Voice.say(c.say, k.en, 'en-US'); }
+function sayCombo(c, combo) {
+  const k = intensityOf(combo);
+  if (Store.data.settings.coach === 'real' && Audio.sayWords(c.words, k.overlap)) return;
+  Voice.say(c.say, k.en, 'en-US');
+}
 
 const Wake = {
   lock: null, want: false,
@@ -560,7 +594,7 @@ function paintDraft() {
   $('fCombo').checked = draft.combo.on;
   $('comboOpts').hidden = !draft.combo.on;
   segOn('fLevel', draft.combo.level); segOn('fPace', draft.combo.pace); segOn('fInt', draft.combo.intensity || 'urgent');
-  $('fVol').value = Store.data.settings.volume; $('oVol').textContent = Store.data.settings.volume + '%';
+  $('fCoach').value = Store.data.settings.coach || 'real'; $('fVol').value = Store.data.settings.volume; $('oVol').textContent = Store.data.settings.volume + '%';
   $('fVib').checked = !!Store.data.settings.vibrate;
   $('fTips').checked = !!Store.data.settings.tips;
   paintVoices();
@@ -617,6 +651,7 @@ function paintVoices() {
 }
 const pitchLabel = (v) => (v <= 0.7 ? '很低沉' : v < 0.95 ? '低沉' : v <= 1.05 ? '原本' : '偏高') + `（${(+v).toFixed(1)}）`;
 try { speechSynthesis.addEventListener('voiceschanged', () => { if ($('dSet').open) paintVoices(); }); } catch {}
+$('fCoach').addEventListener('change', (e) => { Store.data.settings.coach = e.target.value; Store.save(); Audio.ensure(); Voice.unlock(); Audio.loadCoach().then(() => sayCombo({ words: ['One-two', 'Hook', 'Right'], say: 'One-two, Hook, Right' }, draft.combo)); });
 $('fVoiceEn').addEventListener('change', (e) => { Store.data.settings.voiceEn = e.target.value; Store.save(); Voice.unlock(); Voice.say('One-two, Hook, Right', 1.0, 'en-US'); });
 $('fVoiceZh').addEventListener('change', (e) => { Store.data.settings.voiceZh = e.target.value; Store.save(); Voice.unlock(); Voice.say('第一回合，開始'); });
 $('fPitch').addEventListener('input', (e) => { Store.data.settings.pitch = +e.target.value; $('oPitch').textContent = pitchLabel(+e.target.value); Store.save(); });
@@ -629,7 +664,7 @@ document.querySelector('.listen').addEventListener('click', (e) => {
 });
 $('tryCombo').addEventListener('click', () => {
   const pool = comboPool(draft.combo.level), c = pool[Math.floor(Math.random() * pool.length)];
-  Voice.unlock(); sayCombo(c, draft.combo); toast(c.text + '（' + c.desc + '）');
+  Audio.ensure(); Voice.unlock(); sayCombo(c, draft.combo); toast(c.text + '（' + c.desc + '）');
 });
 function readName() { return $('fName').value.trim().slice(0, 30) || '我的課表'; }
 $('btnSave').addEventListener('click', () => {
@@ -747,8 +782,9 @@ if (routeData) {
 renderChips();
 checkIncoming();
 Audio.render();
+Audio.loadCoach();
 requestAnimationFrame(loop);
 if ('serviceWorker' in navigator && import.meta.env.PROD) window.addEventListener('load', () => navigator.serviceWorker.register(BASE + 'sw.js', { scope: BASE }).catch(() => {}));
 
 // 給測試用
-window.__rb = { Engine, Store, Voice };
+window.__rb = { Engine, Store, Voice, Audio };

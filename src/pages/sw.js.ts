@@ -3,7 +3,7 @@ import data from '../data/routines.json';
 
 export function GET() {
   const pages = ['./', './routines/', './builder/', ...data.routines.map((r) => `./routines/${r.slug}/`)];
-  const files = ['./manifest.webmanifest', './img/icon.svg', './img/icon-192.png', './img/icon-512.png', './img/apple-touch-icon.png'];
+  const files = ['./manifest.webmanifest', './img/icon.svg', './img/icon-192.png', './img/icon-512.png', './img/apple-touch-icon.png', './audio/coach.mp3'];
   const body = `// RoundBell 離線快取：先拿網路，斷網用快取（版本 ${Date.now()}）
 const CACHE = 'roundbell-${Date.now().toString(36)}';
 const PAGES = ${JSON.stringify(pages)};

@@ -22,6 +22,10 @@ export const MOVE = {
   側移: { en: 'Side step', name: '側移' },
 };
 
+// 真人配音 public/audio/coach.mp3（使用者 11/16 用 Neo 國賢配好：駕補、萬兔、戶股、阿把、賴抖）
+// 每個字在檔案裡的 [開始, 結束] 秒數（用音量包絡切出來的）
+export const CLIP = { Jab: [0.10, 0.53], 'One-two': [0.62, 1.20], Hook: [1.28, 1.76], Upper: [1.85, 2.205], Right: [2.205, 2.62] };
+
 // 組合之間偶爾穿插的鼓勵／提醒
 export const CHEER = [['Hands up!', '手舉高'], ['Nice punch!', '好拳'], ['Relax!', '放輕鬆'], ['Keep moving!', '腳步別停']];
 // 最後警告時喊一句催促
@@ -51,7 +55,7 @@ export function parseCombo(str) {
     const p = parts[i], m = PUNCH[p] || MOVE[p];
     words.push(m ? m.en : p); zh.push(m ? m.name : p);
   }
-  return { text: words.join(' · '), say: words.join(', '), desc: zh.join('・'), len: parts.length };
+  return { text: words.join(' · '), say: words.join(', '), words, desc: zh.join('・'), len: parts.length };
 }
 
 export function comboPool(level) {
